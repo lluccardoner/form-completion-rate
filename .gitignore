@@ -1,0 +1,5 @@
+# Jupyter notebook checkpoints
+.ipynb_checkpoints
+
+# Files with > 100MB
+completion_rate.csv
