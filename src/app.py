@@ -2,6 +2,7 @@ from pyspark.sql import SparkSession
 
 import arg_parser
 import dataset
+import processing
 
 if __name__ == "__main__":
     """
@@ -22,3 +23,7 @@ if __name__ == "__main__":
         print("Using debug mode")
 
     df = dataset.load_dataset(spark, args.datasetPath, args.debug)
+
+    df_processed = processing.transform(df, args.debug)
+
+    df_processed.show()
