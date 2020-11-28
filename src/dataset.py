@@ -27,5 +27,5 @@ def load_dataset(spark: SparkSession, path: str, debug: bool = False) -> DataFra
         .option("header", True) \
         .schema(DATASET_SCHEMA) \
         .csv(path)
-    df = df.withColumn("CR", df["submissions"] / df["views"])
+    df = df.withColumn("label", df["submissions"] / df["views"])
     return df

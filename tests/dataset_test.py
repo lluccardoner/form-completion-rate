@@ -22,7 +22,7 @@ class DatasetTest(unittest.TestCase):
     def test_load_dataset_should_return_dataframe(self):
         test_path = "resources/test_dataset.csv"
         num_features = 47
-        main_columns = ["form_id", "submissions", "views", "CR"]
+        main_columns = ["form_id", "submissions", "views", "label"]
         feature_columns = ["feat_" + str(i).zfill(2) for i in range(1, num_features + 1)]
 
         df = dataset.load_dataset(self.spark, test_path)
