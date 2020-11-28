@@ -15,7 +15,7 @@ class ProcessingTest(unittest.TestCase):
     def setUpClass(cls):
         cls.spark = SparkSession \
             .builder \
-            .appName("form_complation_rate") \
+            .appName("form_completion_rate") \
             .getOrCreate()
 
     @classmethod
