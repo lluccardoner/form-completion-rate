@@ -1,13 +1,13 @@
 import time
 
-from pyspark.ml import Model
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.regression import LinearRegression
 from pyspark.ml.tuning import CrossValidator, ParamGridBuilder
+from pyspark.ml.tuning import CrossValidatorModel
 from pyspark.sql import DataFrame
 
 
-def cross_validation(df: DataFrame, debug: bool = False) -> Model:
+def cross_validation(df: DataFrame, debug: bool = False) -> CrossValidatorModel:
     lr = LinearRegression()
     grid = ParamGridBuilder() \
         .addGrid(lr.maxIter, [100, 200]) \
@@ -20,14 +20,15 @@ def cross_validation(df: DataFrame, debug: bool = False) -> Model:
     cv = CrossValidator(
         estimator=lr,
         estimatorParamMaps=grid,
-        evaluator=evaluator
+        evaluator=evaluator,
+        seed=42
     )
     if debug:
         print(cv.explainParams())
 
-    print("Start cross-validation model selection...")
+    print("Start grid-search cross-validation model selection...")
     start_time = time.time()
     model = cv.fit(df)
     duration = time.time() - start_time
-    print("Finish cross-validation model selection in {:.2f} seconds".format(duration))
+    print("Finish grid-search cross-validation model selection in {:.2f} seconds".format(duration))
     return model

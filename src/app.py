@@ -1,9 +1,13 @@
+import json
+
 from pyspark.sql import SparkSession
 
 import arg_parser
 import dataset
+import evaluation
 import model_selection
 import processing
+from utils import OUTPUT_DIR
 
 if __name__ == "__main__":
     """
@@ -31,16 +35,13 @@ if __name__ == "__main__":
 
     cv = model_selection.cross_validation(train_df, args.debug)
 
-    model = cv.bestModel
+    model_path = OUTPUT_DIR.joinpath("best_model")
+    print("Saving best model at {}".format(model_path))
+    cv.bestModel.save(str(model_path))
 
-    if model.hasSummary:
-        training_summary = model.summary
+    metrics = evaluation.cv_metrics(cv, test_df)
 
-        print("Total iterations: {}".format(training_summary.totalIterations))
-        print("Train RMSE: %f" % training_summary.rootMeanSquaredError)
-        print("Train r2: %f" % training_summary.r2)
-
-    test_summary = model.evaluate(test_df)
-
-    print("Test RMSE: %f" % test_summary.rootMeanSquaredError)
-    print("Test r2: %f" % test_summary.r2)
+    metrics_path = OUTPUT_DIR.joinpath("metrics.json")
+    with open(metrics_path, 'w') as f:
+        print("Saving metrics at {}".format(metrics_path))
+        json.dump(metrics, f, indent=4, sort_keys=True)
