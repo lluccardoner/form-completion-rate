@@ -27,4 +27,4 @@ class DatasetTest(unittest.TestCase):
 
         df = dataset.load_dataset(self.spark, test_path)
 
-        unittest.TestCase.assertCountEqual(self, df.columns, main_columns + feature_columns)
+        self.assertCountEqual(df.columns, main_columns + feature_columns)

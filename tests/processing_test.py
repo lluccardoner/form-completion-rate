@@ -1,5 +1,6 @@
 import unittest
 
+from pyspark.ml.linalg import Vectors
 from pyspark.sql import Row
 from pyspark.sql import SparkSession
 
@@ -22,13 +23,18 @@ class ProcessingTest(unittest.TestCase):
         cls.spark.stop()
 
     def test_transform_should_return_dataframe(self):
-        row = Row("CR", "views", "feat_01", "feat_02")
-        data = [
-            row(0.5, 100, 0.1, 125.0),
-            row(0.5, 100, 0.1, 125.0)
+        in_data = [
+            Row(CR=0.5, views=100, feat_01=0.1, feat_02=125.0),
+            Row(CR=0.5, views=100, feat_01=0.1, feat_02=125.0)
         ]
-        in_df = self.spark.createDataFrame(data)
+        in_df = self.spark.createDataFrame(in_data)
+
+        expected_data = [
+            Row(CR=0.5, views=100, feat_01=0.1, feat_02=125.0, features=Vectors.dense([0.1, 125.0])),
+            Row(CR=0.5, views=100, feat_01=0.1, feat_02=125.0, features=Vectors.dense([0.1, 125.0]))
+        ]
+        expected_df = self.spark.createDataFrame(expected_data)
 
         out_df = processing.transform(in_df)
 
-        self.assertTrue(are_dfs_equal(in_df, out_df))
+        self.assertTrue(are_dfs_equal(expected_df, out_df))
