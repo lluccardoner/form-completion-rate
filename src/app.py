@@ -34,14 +34,14 @@ if __name__ == "__main__":
     train_df, test_df = df_processed.randomSplit([0.8, 0.2], seed=42)
 
     cv = model_selection.cross_validation(train_df, args.debug)
+    model = cv.bestModel
 
-    model_path = OUTPUT_DIR.joinpath("best_model")
+    model_path = OUTPUT_DIR.joinpath("model")
     print("Saving best model at {}".format(model_path))
-    cv.bestModel.save(str(model_path))
+    model.write().overwrite().save(str(model_path))
 
-    metrics = evaluation.cv_metrics(cv, test_df)
+    cv_metrics_path = OUTPUT_DIR.joinpath("cv-metrics.json")
+    evaluation.cv_metrics(cv, output_path=cv_metrics_path)
 
-    metrics_path = OUTPUT_DIR.joinpath("metrics.json")
-    with open(metrics_path, 'w') as f:
-        print("Saving metrics at {}".format(metrics_path))
-        json.dump(metrics, f, indent=4, sort_keys=True)
+    model_metrics_path = OUTPUT_DIR.joinpath("model-metrics.json")
+    evaluation.model_metrics(model, test_df, output_path=model_metrics_path)

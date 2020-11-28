@@ -1,9 +1,11 @@
+import json
+
 from pyspark.ml import Model
 from pyspark.ml.tuning import CrossValidatorModel
 from pyspark.sql import DataFrame
 
 
-def cv_metrics(model: CrossValidatorModel, test_df: DataFrame) -> dict:
+def cv_metrics(model: CrossValidatorModel, output_path=None) -> dict:
     num_folds = model.getNumFolds()
     evaluator_metric = model.getEvaluator().getMetricName()
 
@@ -22,15 +24,17 @@ def cv_metrics(model: CrossValidatorModel, test_df: DataFrame) -> dict:
         "cross_validation_metrics": {
             "num_folds": num_folds,
             "evaluator_metric": evaluator_metric,
-            "grid_search": grid,
-            "best_model": model_metrics(model.bestModel, test_df)
+            "grid_search": grid
         }
     }
+
+    if output_path is not None:
+        save_metrics(metrics, output_path)
 
     return metrics
 
 
-def model_metrics(model: Model, test_df: DataFrame) -> dict:
+def model_metrics(model: Model, test_df: DataFrame, output_path=None) -> dict:
     metrics = {
         "model_params": dict([(str(param), value) for param, value in model.extractParamMap().items()])
     }
@@ -51,4 +55,13 @@ def model_metrics(model: Model, test_df: DataFrame) -> dict:
         "r2": test_summary.r2
     }
 
+    if output_path is not None:
+        save_metrics(metrics, output_path)
+
     return metrics
+
+
+def save_metrics(metrics, path):
+    with open(path, 'w') as f:
+        print("Saving metrics at {}".format(path))
+        json.dump(metrics, f, indent=4, sort_keys=True)
