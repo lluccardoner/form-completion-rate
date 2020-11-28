@@ -27,15 +27,22 @@ if __name__ == "__main__":
 
     df_processed = processing.transform(df, args.debug)
 
+    train_df, test_df = df_processed.randomSplit([0.8, 0.2], seed=42)
+
     train_params = {
         "labelCol": "CR",
         "regParam": 0.3,
         "elasticNetParam": 0.1
     }
-    model = training.fit(df_processed, train_params, args.debug)
+    model = training.fit(train_df, train_params, args.debug)
 
     training_summary = model.summary
 
     print("Total iterations: {}".format(training_summary.totalIterations))
-    print("RMSE: %f" % training_summary.rootMeanSquaredError)
-    print("r2: %f" % training_summary.r2)
+    print("Train RMSE: %f" % training_summary.rootMeanSquaredError)
+    print("Train r2: %f" % training_summary.r2)
+
+    test_summary = model.evaluate(test_df)
+
+    print("Test RMSE: %f" % test_summary.rootMeanSquaredError)
+    print("Test r2: %f" % test_summary.r2)
