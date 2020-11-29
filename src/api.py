@@ -13,6 +13,7 @@ app = FastAPI()
 
 spark = SparkSession \
     .builder \
+    .master("local") \
     .appName("form_completion_rate_api") \
     .getOrCreate()
 
@@ -31,5 +32,6 @@ async def predict(sample: Sample):
     prediction = prediction_df.collect()[0]["prediction"]
     return {"Prediction": prediction}
 
+
 if __name__ == "__main__":
-    uvicorn.run("api:app", reload=True)
+    uvicorn.run("api:app", host="0.0.0.0", port=8000)
