@@ -1,5 +1,3 @@
-import json
-
 from pyspark.sql import SparkSession
 
 import arg_parser
@@ -40,8 +38,6 @@ if __name__ == "__main__":
     print("Saving best model at {}".format(model_path))
     model.write().overwrite().save(str(model_path))
 
-    cv_metrics_path = OUTPUT_DIR.joinpath("cv-metrics.json")
-    evaluation.cv_metrics(cv, output_path=cv_metrics_path)
+    evaluation.cv_metrics(cv, output_dir=OUTPUT_DIR)
 
-    model_metrics_path = OUTPUT_DIR.joinpath("model-metrics.json")
-    evaluation.model_metrics(model, test_df, output_path=model_metrics_path)
+    evaluation.model_metrics(model, test_df, output_dir=OUTPUT_DIR, residuals=True)
