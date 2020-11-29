@@ -29,7 +29,7 @@ def get_stage() -> CrossValidator:
         .addGrid(lr.elasticNetParam, [0.1, 0.2]) \
         .build()
     evaluator = RegressionEvaluator(
-        metricName="rmse"
+        metricName="mae"
     )
     cv = CrossValidator(
         estimator=lr,
