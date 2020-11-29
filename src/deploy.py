@@ -40,5 +40,6 @@ if __name__ == "__main__":
     duration = time.time() - start_time
     print("Finish training in {:.2f} seconds".format(duration))
 
-    print("Deploying model at {}".format(DEPLOY_DIR))
-    model.write().overwrite().save(str(DEPLOY_DIR))
+    deploy_dir = DEPLOY_DIR / "latest"
+    print("Deploying model at {}".format(deploy_dir))
+    model.write().overwrite().save(str(deploy_dir))

@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from pyspark.sql import DataFrame
 
 ROOT_DIR: Path = Path(__file__).parent.parent
-DEPLOY_DIR: Path = ROOT_DIR / "deploy" / "latest"
+DEPLOY_DIR: Path = ROOT_DIR / "deploy"
 OUTPUT_DIR: Path = ROOT_DIR / "output"
 RESOURCES_DIR: Path = ROOT_DIR / "resources"
 MODEL_DIR: Path = OUTPUT_DIR / "model"
@@ -28,50 +28,50 @@ def are_dfs_equal(df1: DataFrame, df2: DataFrame) -> bool:
 
 
 class Sample(BaseModel):
-    feat_01: int
-    feat_02: int
-    feat_03: int
-    feat_04: int
-    feat_05: int
-    feat_06: int
-    feat_07: int
-    feat_08: int
-    feat_09: int
-    feat_10: int
-    feat_11: int
-    feat_12: int
-    feat_13: int
-    feat_14: int
-    feat_15: int
-    feat_16: int
-    feat_17: int
-    feat_18: int
-    feat_19: int
-    feat_20: int
-    feat_21: int
-    feat_22: int
-    feat_23: int
-    feat_24: int
-    feat_25: int
-    feat_26: int
-    feat_27: int
-    feat_28: int
-    feat_29: int
-    feat_30: int
-    feat_31: int
-    feat_32: int
-    feat_33: int
-    feat_34: int
-    feat_35: int
-    feat_36: int
-    feat_37: int
-    feat_38: int
-    feat_39: int
-    feat_40: int
-    feat_41: int
-    feat_42: int
-    feat_43: int
-    feat_44: int
-    feat_45: int
-    feat_46: int
-    feat_47: int
+    feat_01: float
+    feat_02: float
+    feat_03: float
+    feat_04: float
+    feat_05: float
+    feat_06: float
+    feat_07: float
+    feat_08: float
+    feat_09: float
+    feat_10: float
+    feat_11: float
+    feat_12: float
+    feat_13: float
+    feat_14: float
+    feat_15: float
+    feat_16: float
+    feat_17: float
+    feat_18: float
+    feat_19: float
+    feat_20: float
+    feat_21: float
+    feat_22: float
+    feat_23: float
+    feat_24: float
+    feat_25: float
+    feat_26: float
+    feat_27: float
+    feat_28: float
+    feat_29: float
+    feat_30: float
+    feat_31: float
+    feat_32: float
+    feat_33: float
+    feat_34: float
+    feat_35: float
+    feat_36: float
+    feat_37: float
+    feat_38: float
+    feat_39: float
+    feat_40: float
+    feat_41: float
+    feat_42: float
+    feat_43: float
+    feat_44: float
+    feat_45: float
+    feat_46: float
+    feat_47: float
