@@ -14,6 +14,7 @@ if __name__ == "__main__":
     - Process the dataset
     - Train a model
     - Evaluate the model
+    - Save the model
     """
     spark = SparkSession \
         .builder \

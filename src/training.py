@@ -4,8 +4,13 @@ from pyspark.sql import DataFrame
 
 
 def fit(df: DataFrame, params: dict, debug: bool = False) -> Model:
-    lr = LinearRegression()
-    lr.setParams(**params)
+    lr = get_stage(params)
     if debug:
         print(lr.explainParams())
     return lr.fit(df)
+
+
+def get_stage(params):
+    lr = LinearRegression()
+    lr.setParams(**params)
+    return lr

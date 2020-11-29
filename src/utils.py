@@ -4,9 +4,10 @@ from pydantic import BaseModel
 from pyspark.sql import DataFrame
 
 ROOT_DIR: Path = Path(__file__).parent.parent
-OUTPUT_DIR: Path = ROOT_DIR.joinpath("output")
-RESOURCES_DIR: Path = ROOT_DIR.joinpath("resources")
-MODEL_DIR: Path = OUTPUT_DIR.joinpath("model")
+DEPLOY_DIR: Path = ROOT_DIR / "deploy" / "latest"
+OUTPUT_DIR: Path = ROOT_DIR / "output"
+RESOURCES_DIR: Path = ROOT_DIR / "resources"
+MODEL_DIR: Path = OUTPUT_DIR / "model"
 
 
 def are_dfs_equal(df1: DataFrame, df2: DataFrame) -> bool:
