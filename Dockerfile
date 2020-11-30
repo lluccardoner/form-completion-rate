@@ -1,11 +1,13 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8-slim
+FROM jupyter/pyspark-notebook
 
-COPY requirements-api.txt requirements.txt
+WORKDIR /opt
 
-RUN apt-get update && apt-get install -y --no-install-recommends libgomp1 && \
-    rm -rf /var/lib/apt/lists/* /tmp/* && \
-    pip install --no-cache-dir -qq -r requirements.txt
+COPY requirements.txt .
 
-ENV PYTHONPATH=/
+RUN pip install -r requirements.txt
 
-COPY ./app /app
+COPY src/ ./src/
+COPY deploy/ ./deploy/
+COPY resources/dataset/ ./resources/dataset/
+
+CMD [ "python3", "./src/api.py" ]
