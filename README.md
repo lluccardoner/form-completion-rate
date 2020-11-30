@@ -6,17 +6,38 @@ This project consist of:
 
 ## Usage
 
-Run API server:
+You need (docker)[https://docs.docker.com/get-docker/] to be installed in your computer.
+
+Create docker image:
 ```bash
+docker build -f Dockerfile -t img-form-completion-rate .
+```
+
+Run container:
+```bash
+docker run -d --name form-completion-rate -p 8000:8000 img-form-completion-rate
+```
+Wait some time for the API to load automatically after running the container.
+The API server is running on http://0.0.0.0:8000
+
+To run the API outside the container run:
+```bash
+python3 src/api.py
 ```
 
 Train and deploy model:
 
+Outside the docker container:
 ```bash
+python3 src/deploy.py [datasetPath]
+```
+
+Inside the docker container:
+```bash
+docker exec -ti form-completion-rate sh -c "python /opt/form-completion-rate/src/deploy.py"
 ```
 
 Send requests to server:
-
 ```bash
 curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d @resources/sample.json
 ```
@@ -26,6 +47,10 @@ curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -
 This project uses Apacke Spark ML python [package](https://spark.apache.org/docs/latest/api/python/pyspark.ml.html).
 It has been chosen because I am familiar with it and because it allows to save and load a full trained [ML pipeline](https://spark.apache.org/docs/latest/api/python/pyspark.ml.html). 
 The benefit of that is that the real-time service that serves the predictions is agnostic of all the data transformations needed.
+
+For now both services are in the same docker container since the dataset and deployed model are inside too. 
+This is done so no external files are needed. To put this services in production, 
+the dataset and the deployed model could be loaded from an external storage such as AWS S3.  
 
 ### Dataset
 

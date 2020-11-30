@@ -8,6 +8,7 @@ DEPLOY_DIR: Path = ROOT_DIR / "deploy"
 OUTPUT_DIR: Path = ROOT_DIR / "output"
 RESOURCES_DIR: Path = ROOT_DIR / "resources"
 MODEL_DIR: Path = OUTPUT_DIR / "model"
+DATASET_DIR: Path = RESOURCES_DIR / "dataset"
 
 
 def are_dfs_equal(df1: DataFrame, df2: DataFrame) -> bool:

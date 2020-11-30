@@ -1,6 +1,6 @@
 FROM jupyter/pyspark-notebook
 
-WORKDIR /opt
+WORKDIR /opt/form-completion-rate
 
 COPY requirements.txt .
 
