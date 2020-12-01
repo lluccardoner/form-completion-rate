@@ -16,8 +16,10 @@ docker build -f Dockerfile -t img-form-completion-rate .
 ```
 
 Run container:
+
+Image is available in [Docker Hub](https://hub.docker.com/repository/docker/lluccardoner/img-form-completion-rate)
 ```bash
-docker run -d --name form-completion-rate -p 8000:8000 img-form-completion-rate
+docker run -d --name form-completion-rate -p 8000:8000 lluccardoner/img-form-completion-rate:latest
 ```
 Wait some time for the API to load automatically after running the container.
 The API server is running on http://0.0.0.0:8000
