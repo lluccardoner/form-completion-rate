@@ -6,9 +6,11 @@ This project consist of:
 
 ## Usage
 
-You need (docker)[https://docs.docker.com/get-docker/] to be installed in your computer.
+You need [docker](https://docs.docker.com/get-docker/) to be installed in your computer.
 
 Create docker image:
+
+Before doing that, give user permissions to the deploy/latest folder.
 ```bash
 docker build -f Dockerfile -t img-form-completion-rate .
 ```
@@ -38,6 +40,8 @@ docker exec -ti form-completion-rate sh -c "python /opt/form-completion-rate/src
 ```
 
 Send requests to server:
+
+Note: the samle.json file contains manually generated values
 ```bash
 curl -X POST http://localhost:8000/predict -H "Content-Type: application/json" -d @resources/sample.json
 ```
@@ -50,7 +54,10 @@ The benefit of that is that the real-time service that serves the predictions is
 
 For now both services are in the same docker container since the dataset and deployed model are inside too. 
 This is done so no external files are needed. To put this services in production, 
-the dataset and the deployed model could be loaded from an external storage such as AWS S3.  
+the dataset and the deployed model could be loaded from an external storage such as AWS S3.
+
+This project has been a good challenge for me since it is the first time I serve a ML model 
+with an API and its the first time I create a docker container myself.  
 
 ### Dataset
 
@@ -75,6 +82,9 @@ See notebooks/data_exploration.ipynb for the dataset analysis.
 
 The processing pipeline consists of:
 * A vector assembler that groups all used features in one vector
+* The LogisticRegression model has by default `standardization=True` activated for the input
+
+TODO: Log-transform of the features was not implemented with a custom transformer
 
 ### Modeling
 
@@ -92,7 +102,7 @@ Then the metrics are stored in the output folder along with a plot of the residu
 ### Deployment
 
 The src/deployment.py trains the model using grid-search and cross-validation. 
-Then the full pipeline is saved to be used by the real-time service. 
+Then the full pipeline is saved to be used by the real-time service.
 
 ### Monitoring
 
@@ -133,11 +143,35 @@ AWS also has the CloudWatch service that provides monitoring and logging.
 Other services that could be used include CloudFormation to manage the infrastructure 
 or Amazon VPC to control the networking environment between instances.
 
+### API stress test
+
+Stress test done using [wrk](https://github.com/wg/wrk).
+
+```bash
+wrk -s wrk.lua -t12 -c400 -d30s http://localhost:8000/predic
+```
+
+Results:
+When performing the test, Spark threw errors. Maybe the choice os using spark was not ideal for this task.
+Since it is my first time building an API like this, I will take this into account for future projects.
+
 ## Future work
 
 * Grid Search using value distributions instead of discrete values
+    
+    For now, discrete values are used to perform grid-search. 
+    A better approach could be to give the values distribution and pick some random samples from it.
+    
 * Add log-transform to the processing pipeline
-* Train model with full dataset
-* Dockerize both services
-* Do API stress test
+
+    Custom transformer that does the log-transform of the features has not been implemented in the full pipeline due to time limits.
+
+* Hot-reloading the model to memory
+
+    A bare implementation has been done but it does not work as expected. Try to improve this int he future.
+    
 * Finish tests
+
+    Although I personally like and use the TDD approach, this technique has not been use here due to time constrains.
+    Testing is real important but it creates a development overhead at the beginning of the project. 
+    If done correctly, this overhead translates in the future to better scalable code and better code maintenance and bug detection.

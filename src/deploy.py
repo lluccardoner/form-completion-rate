@@ -3,6 +3,7 @@ import time
 from pyspark.ml import Pipeline
 from pyspark.sql import SparkSession
 
+import api
 import arg_parser
 import dataset
 import model_selection
@@ -43,3 +44,5 @@ if __name__ == "__main__":
     deploy_dir = DEPLOY_DIR / "latest"
     print("Deploying model at {}".format(deploy_dir))
     model.write().overwrite().save(str(deploy_dir))
+
+    api.load_model()

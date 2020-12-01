@@ -1,3 +1,5 @@
+import time
+
 import uvicorn
 from fastapi import FastAPI
 from pyspark.ml import PipelineModel
@@ -26,11 +28,22 @@ def home():
 
 
 @app.post("/predict")
-async def predict(sample: Sample):
+def predict(sample: Sample):
+    if model is None:
+        return {"Error": "No model loaded yet"}
     sample_df = spark.createDataFrame([dict(sample)], schema=INPUT_SCHEMA)
     prediction_df = model.transform(sample_df)
     prediction = prediction_df.collect()[0]["prediction"]
     return {"Prediction": prediction}
+
+
+def load_model():
+    print("Reloading model {}".format(time.ctime()))
+    try:
+        global model
+        model = PipelineModel.load(str(DEPLOY_DIR / "latest"))
+    except:
+        print("Could not load model")
 
 
 if __name__ == "__main__":
