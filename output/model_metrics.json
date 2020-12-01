@@ -1,0 +1,28 @@
+{
+    "model_params": {
+        "LinearRegression_51cb4504453d__aggregationDepth": 2,
+        "LinearRegression_51cb4504453d__elasticNetParam": 0.1,
+        "LinearRegression_51cb4504453d__epsilon": 1.35,
+        "LinearRegression_51cb4504453d__featuresCol": "features",
+        "LinearRegression_51cb4504453d__fitIntercept": true,
+        "LinearRegression_51cb4504453d__labelCol": "label",
+        "LinearRegression_51cb4504453d__loss": "squaredError",
+        "LinearRegression_51cb4504453d__maxIter": 100,
+        "LinearRegression_51cb4504453d__predictionCol": "prediction",
+        "LinearRegression_51cb4504453d__regParam": 0.1,
+        "LinearRegression_51cb4504453d__solver": "auto",
+        "LinearRegression_51cb4504453d__standardization": true,
+        "LinearRegression_51cb4504453d__tol": 1e-06
+    },
+    "test_summary": {
+        "mae": 0.27954923098229734,
+        "r2": -Infinity,
+        "rmse": 0.27954923098229734
+    },
+    "training_summary": {
+        "mae": 0.018268794894173684,
+        "r2": 0.9868202097922018,
+        "rmse": 0.022030781927998823,
+        "totalIterations": 51
+    }
+}

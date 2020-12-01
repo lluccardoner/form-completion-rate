@@ -1,0 +1,72 @@
+{
+    "cross_validation_metrics": {
+        "evaluator_metric": "mae",
+        "grid_search": [
+            {
+                "mae": 0.2257936589766708,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.1,
+                    "LinearRegression_51cb4504453d__maxIter": 100,
+                    "LinearRegression_51cb4504453d__regParam": 0.1
+                }
+            },
+            {
+                "mae": 0.244694382101975,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.2,
+                    "LinearRegression_51cb4504453d__maxIter": 100,
+                    "LinearRegression_51cb4504453d__regParam": 0.1
+                }
+            },
+            {
+                "mae": 0.24057330437370747,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.1,
+                    "LinearRegression_51cb4504453d__maxIter": 100,
+                    "LinearRegression_51cb4504453d__regParam": 0.2
+                }
+            },
+            {
+                "mae": 0.27088694181490003,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.2,
+                    "LinearRegression_51cb4504453d__maxIter": 100,
+                    "LinearRegression_51cb4504453d__regParam": 0.2
+                }
+            },
+            {
+                "mae": 0.2257936589766708,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.1,
+                    "LinearRegression_51cb4504453d__maxIter": 200,
+                    "LinearRegression_51cb4504453d__regParam": 0.1
+                }
+            },
+            {
+                "mae": 0.244694382101975,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.2,
+                    "LinearRegression_51cb4504453d__maxIter": 200,
+                    "LinearRegression_51cb4504453d__regParam": 0.1
+                }
+            },
+            {
+                "mae": 0.24057330437370747,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.1,
+                    "LinearRegression_51cb4504453d__maxIter": 200,
+                    "LinearRegression_51cb4504453d__regParam": 0.2
+                }
+            },
+            {
+                "mae": 0.27088694181490003,
+                "params": {
+                    "LinearRegression_51cb4504453d__elasticNetParam": 0.2,
+                    "LinearRegression_51cb4504453d__maxIter": 200,
+                    "LinearRegression_51cb4504453d__regParam": 0.2
+                }
+            }
+        ],
+        "num_folds": 3
+    }
+}
